@@ -86,15 +86,16 @@ function createMoneyEffect() {
 
 // Função para disparar o efeito de confetti e exibir o overlay de sucesso
 function triggerSuccess() {
-  // Dispara confetti
-  for (let i = 0; i < 50; i++) {
+  // Dispara confetti continuamente
+  const interval = setInterval(() => {
     createConfetti();
-  }
-  
-  // Exibe o overlay de sucesso após um pequeno delay (para deixar o confetti aparecer)
+  }, 100); // Intervalo de 100ms para disparar confetes continuamente
+
+  // Exibe o overlay de sucesso após um pequeno delay (para deixar o confetti aparecer mais rápido)
   setTimeout(() => {
     successOverlay.classList.remove('hidden');
-  }, 500);
+    clearInterval(interval); // Para de gerar confetes após a exibição do overlay
+  }, 2000); // Confetes caindo por 2 segundos antes de mostrar o overlay (acelerado)
 }
 
 // Cria uma peça de confetti com cores e posições aleatórias
@@ -106,20 +107,26 @@ function createConfetti() {
   const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63'];
   confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
   
-  // Define posição horizontal aleatória dentro do overlay
-  confetti.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+  // Define posição horizontal aleatória dentro da tela
+  const startPosX = Math.floor(Math.random() * window.innerWidth);
+  confetti.style.left = `${startPosX}px`;
   confetti.style.top = '-20px'; // Inicia acima da tela
   
   // Adiciona a peça ao overlay (ou ao body)
   document.body.appendChild(confetti);
   
-  // Remove o confetti após a animação (2 segundos)
+  // Animação de queda: faz o confete cair e se dispersar
+  const fallDuration = Math.floor(Math.random() * 1 + 2) * 1000; // Duração agora entre 2 e 3 segundos (mais rápido)
+  const fallDistance = Math.floor(Math.random() * 300 + 300); // Distância aleatória (300 a 600px)
+  const horizontalDrift = Math.floor(Math.random() * 100 - 50); // Deslocamento horizontal aleatório
+
+  // Anima a queda do confete
+  confetti.style.transition = `top ${fallDuration}ms linear, left ${fallDuration}ms ease-in-out`;
+  confetti.style.top = `${fallDistance}px`;
+  confetti.style.left = `${startPosX + horizontalDrift}px`; // Aquele "deslize" enquanto cai
+
+  // Remove o confete após a animação (duração da animação + 500ms)
   setTimeout(() => {
     confetti.remove();
-  }, 2000);
+  }, fallDuration + 500); // Remove o confete após a animação
 }
-
-// Exemplo de ação do botão de download (adicione o link real do seu app)
-downloadButton.addEventListener('click', () => {
-  window.location.href = 'https://www.seuapp.com/download'; // Substitua pelo link do seu app
-});
