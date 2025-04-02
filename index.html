@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Limit Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Increase Your Credit Limit!</h1>
+    <div class="progress-bar-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+    <button id="click-button">Click Me!</button>
+    <div class="score">
+      <span id="score-display">R$ 0</span>
+    </div>
+  </div>
+
+  <!-- Overlay for success message and confetti -->
+  <div id="success-overlay" class="overlay hidden">
+    <div class="overlay-content">
+      <div id="confetti-container"></div>
+      <h2>Congratulations!</h2>
+      <p>You reached your credit limit!</p>
+      <button id="download-button">Download Our App</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
